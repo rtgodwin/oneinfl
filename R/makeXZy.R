@@ -8,7 +8,6 @@ makeXZy <- function(formula, data) {
     if (length(formula[[3]]) > 1 && identical(formula[[3]][[1]], as.name("|"))) {
     ff <- formula
     formula[[3]][1] <- call("+")
-    #mf$formula <- formula
     ffc <- . ~ .
     ffz <- ~.
     ffc[[2]] <- ff[[2]]
