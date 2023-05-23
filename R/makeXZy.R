@@ -18,7 +18,6 @@ makeXZy <- function(formula, data) {
     ffz <- ffc <- ff <- formula
     ffz[[2]] <- NULL
   }
-
   mf <- model.frame(formula = formula, data = data)
   mtX <- terms(ffc, data = data)
   X <- model.matrix(mtX, mf)
