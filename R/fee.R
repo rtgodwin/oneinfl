@@ -1,10 +1,8 @@
 fee <- function(model, data, at="AE") {
   q <- list()
-
   b <- model$beta
   g <- model$gamma
   if (model$dist == "negbin") {a <- model$alpha}
-
   formula <- model$formula
   cleandata <- makeXZy(formula, data)
   X <- cleandata$X
