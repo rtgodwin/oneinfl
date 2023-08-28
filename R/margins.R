@@ -1,4 +1,4 @@
-dEdq <- function(model, data, at="AE") {
+margins <- function(model, data, at="AE") {
 
   q <- list()
 
