@@ -1,4 +1,4 @@
-dfee_pois <- function(b, g, X, Z, dummies) {
+dEdq_pois <- function(b, g, X, Z, dummies) {
   l <- exp(X %*% b)
   t <- exp(-Z %*% g)
   L <- -l / (exp(l) - l - 1)
@@ -12,7 +12,7 @@ dfee_pois <- function(b, g, X, Z, dummies) {
   dzdq[, -which(colnames(dzdq) %in% colnames(Z)[-1])] <- 0L
   
   dwdq <- dldq * as.vector(((exp(l) - l * exp(l) - 1) / (exp(l) - l - 1) ^ 2) * ((-t) / (1 + t))) - dzdq * as.vector(((exp(l) - 1) / ((exp(l) - l - 1) * (1 + t) ^ 2)))
-  dfeedq <- dwdq * as.vector((1 - (l * exp(l)) / (exp(l) - 1))) + dldq * as.vector(((w * exp(l) * (l - exp(l) + 1)) / ((exp(l) - 1) ^ 2)))
+  dEdq <- dwdq * as.vector((1 - (l * exp(l)) / (exp(l) - 1))) + dldq * as.vector((1 - w) * exp(l) * (exp(l) - l - 1) / (exp(l) - 1) ^ 2)
   
   for(i in 1:length(dummies)) {
     Xd1 <- Xd0 <- X
@@ -21,7 +21,7 @@ dfee_pois <- function(b, g, X, Z, dummies) {
     Xd0[ , dummies[i] == colnames(X)] <- 0
     Zd1[ , dummies[i] == colnames(Z)] <- 1
     Zd0[ , dummies[i] == colnames(Z)] <- 0
-    dfeedq[, dummies[i]] <- fee_pois(b, g, X=Xd1, Z=Zd1) - fee_pois(b, g, X=Xd0, Z=Zd0)
+    dEdq[, dummies[i]] <- E_pois(b, g, X=Xd1, Z=Zd1) - E_pois(b, g, X=Xd0, Z=Zd0)
   }
-  dfeedq
+  dEq
 }
