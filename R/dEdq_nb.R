@@ -1,10 +1,8 @@
-dfee_nb <- function(b, g, a, X, Z, dummies) {
+dEdq_nb <- function(b, g, a, X, Z, dummies) {
   l <- exp(X %*% b)
-  t <- exp(-Z %*% g)
   th <- l / a
-  P1 <- a * ((1 / (1 + th)) ^ a) * th / (1 + th - (1 + th) ^ (1 - a))
-  L <- -P1 / (1 - P1)
-  w <- L + (1 - L) / (1 + t)
+  L <- -(((a / (a + li)) ^ (-)) * (1 / l) * (1 + l/a - (1 + l/a) ^ (1-a)) - 1) ^ (-1)
+  w <- L + (1 - L) / (1 + exp(-Z %*% g))
   
   dldq <- dzdq <- matrix(, nrow(X), (ncol(data) - 1))
   colnames(dldq) <- colnames(dzdq) <- colnames(data[-1])
