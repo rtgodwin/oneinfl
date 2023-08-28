@@ -20,7 +20,9 @@ dEdq_nb <- function(b, g, a, X, Z, dummies) {
   dEdq <- dwdq * as.vector((1 - l / (1 - (1 + l / a) ^ (-a)))) + dldq * as.vector(((1 - w) / (1 - (1 + l / a) ^ (-a))) * (1 - (l * (1 + l / a) ^ (-a - 1)) / (1 - (1 + l / a) ^ (-a))))
   
   # Calculate the "marginal" effect for dummies properly
-  for(i in 1:length(dummies)) {
+  if(length(dummies) == 0) {return(dEdq)}
+  else {
+    for(i in 1:length(dummies)) {
     Xd1 <- Xd0 <- X
     Zd1 <- Zd0 <- Z
     Xd1[ , dummies[i] == colnames(X)] <- 1
@@ -28,6 +30,7 @@ dEdq_nb <- function(b, g, a, X, Z, dummies) {
     Zd1[ , dummies[i] == colnames(Z)] <- 1
     Zd0[ , dummies[i] == colnames(Z)] <- 0
     dEdq[, dummies[i]] <- E_negbin(b, g, a, X=Xd1, Z=Zd1) - E_negbin(b, g, a, X=Xd0, Z=Zd0)
+    }
+  return(dEdq)
   }
-  dEdq
 }
