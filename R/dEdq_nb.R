@@ -16,7 +16,7 @@ dEdq_nb <- function(b, g, a, X, Z, dummies) {
   dfdq <- dldq * as.vector(((1 + l / a) ^ (-a)) * (1 + l / a - (1 + l / a) ^ (1 - a)) ^ (-1) * (1 - (a ^ 2) * l / ((a + l) ^ 2) - (l / a) * (1 + l / a - (1 + l / a) ^ (1 - a)) ^ (-1) * (1 - (1 - a) * (1 + l / a) ^ (-a))))
   dLdq <- -dfdq / as.vector(((1 - P1) ^ 2))
   dwdq <- dLdq * as.vector((1 - 1 / (1 + t))) - dzdq * as.vector(((1 - P1) / (1 + t) ^ 2))
-  dEdq <- dwdq * as.vector((1 - l / (1 - (1 + l / a) ^ (-a)))) - dldq * as.vector((w / (1 - (1 + l / a) ^ (-a))) * (1 + (l * (1 + l / a) ^ (-a - 1)) / (1 - (1 + l / a) ^ (-a))))
+  dEdq <- dwdq * as.vector((1 - l / (1 - (1 + l / a) ^ (-a)))) + dldq * as.vector(((1 - w) / (1 - (1 + l / a) ^ (-a))) * (1 - (l * (1 + l / a) ^ (-a - 1)) / (1 - (1 + l / a) ^ (-a))))
   
   # Calculate the "marginal" effect for dummies properly
   for(i in 1:length(dummies)) {
