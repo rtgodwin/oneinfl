@@ -39,15 +39,15 @@ dfeep <- function(model, data, at="AE") {
   }
 
   if (model$dist == "Poisson") {
-    q$dfee <- colMeans(dfee_pois(b, g, X, Z, dummies))
-    J <- as.matrix(colMeans(attr(numericDeriv(quote(dfee_pois(b, g, X, Z, dummies)), c("b", "g")), "gradient")))
-    q$sefee <- sqrt(diag(J %*% model$vc %*% t(J)))
+    q$dEdq <- colMeans(dEdq_pois(b, g, X, Z, dummies))
+    J <- as.matrix(colMeans(attr(numericDeriv(quote(dEdq_pois(b, g, X, Z, dummies)), c("b", "g")), "gradient")))
+    q$se <- sqrt(diag(J %*% model$vc %*% t(J)))
   }
 
   if (model$dist == "negbin") {
-    q$dfee <- colMeans(dfee_nb(b, g, a, X, Z, dummies))
-    J <- as.matrix(colMeans(attr(numericDeriv(quote(dfee_nb(b, g, a, X, Z, dummies)), c("b", "g", "a")), "gradient")))
-    q$sefee <- sqrt(diag(J %*% model$vc %*% t(J)))
+    q$dEdq <- colMeans(dEdq_nb(b, g, a, X, Z, dummies))
+    J <- as.matrix(colMeans(attr(numericDeriv(quote(dEdq_nb(b, g, a, X, Z, dummies)), c("b", "g", "a")), "gradient")))
+    q$se <- sqrt(diag(J %*% model$vc %*% t(J)))
   }
 
   q
