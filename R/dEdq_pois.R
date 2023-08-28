@@ -23,5 +23,5 @@ dEdq_pois <- function(b, g, X, Z, dummies) {
     Zd0[ , dummies[i] == colnames(Z)] <- 0
     dEdq[, dummies[i]] <- E_pois(b, g, X=Xd1, Z=Zd1) - E_pois(b, g, X=Xd0, Z=Zd0)
   }
-  dEq
+  dEdq
 }
