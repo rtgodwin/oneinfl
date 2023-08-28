@@ -19,7 +19,7 @@ dfeep <- function(model, data, at="AE") {
   dummies <- colnames(data[-1])[apply(data[-1], 2, is.dummy)]
 
   if (is.list(at)) {
-    q$where <- "Marginal first exposure effect evaluated at: "
+    q$where <- "Marginal effect evaluated at: "
     for(i in 1:(length(at) - 1)) {
       q$where <- paste(q$where, names(at[i]), " = ", unlist(at[i]), ", ", sep = "")
     }
@@ -30,10 +30,10 @@ dfeep <- function(model, data, at="AE") {
       if(names(at[i]) %in% colnames(Z)) {Z <- '[<-'(Z, , names(at[i]), unlist(at[i]))}
     }
   } else if (at == "EM") {
-    q$where <- "Marginal first exposure effect evaluated at the sample means of the data"
+    q$where <- "Marginal effect evaluated at the sample means of the data"
     X <- matrix((colSums(X) / nrow(X)), 1, ncol(X), dimnames = list(1, colnames(X)))
     Z <- matrix((colSums(Z) / nrow(Z)), 1, ncol(Z), dimnames = list(1, colnames(Z)))
-  } else if (at == "AE") {q$where <- "Marginal first exposure effect averaged over all data points"
+  } else if (at == "AE") {q$where <- "Marginal effect averaged over all data points"
   } else {
     stop("'at' must be 'AE' (average effect), 'EM' (effect at means), or a list of representative cases in which to evaluate the effect")
   }
