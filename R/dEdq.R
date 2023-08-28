@@ -1,4 +1,4 @@
-dfeep <- function(model, data, at="AE") {
+dEdq <- function(model, data, at="AE") {
 
   q <- list()
 
