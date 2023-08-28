@@ -1,8 +1,9 @@
 dEdq_nb <- function(b, g, a, X, Z, dummies) {
   l <- exp(X %*% b)
+  t <- exp(-Z %*% g)
   th <- l / a
-  L <- -(((a / (a + li)) ^ (-)) * (1 / l) * (1 + l/a - (1 + l/a) ^ (1-a)) - 1) ^ (-1)
-  w <- L + (1 - L) / (1 + exp(-Z %*% g))
+  L <- -(((a / (a + li)) ^ (-a)) * (1 / l) * (1 + l/a - (1 + l/a) ^ (1-a)) - 1) ^ (-1)
+  w <- L + (1 - L) / (1 + t)
   
   dldq <- dzdq <- matrix(, nrow(X), (ncol(data) - 1))
   colnames(dldq) <- colnames(dzdq) <- colnames(data[-1])
