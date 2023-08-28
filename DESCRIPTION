@@ -1,11 +1,10 @@
-Package: fee
+Package: oneinfl
 Type: Package
-Title: What the Package Does (Title Case)
+Title: Estimates OIPP and OIZTNB Regression Models
 Version: 0.1.0
-Author: Who wrote it
-Maintainer: The package maintainer <yourself@somewhere.net>
-Description: More about what it does (maybe more than one line)
-    Use four spaces when indenting paragraphs within the Description.
-License: What license is it under?
+Author: Ryan T. Godwin
+Maintainer: Ryan T. Godwin <ryan.godwin@umanitoba.ca>
+Description: Estimates one-inflated positive Poisson (OIPP) and one-inflated zero truncated (OIZTNB) regression models. Marginal effects and their standard errors are also estimated.
+License: MIT License
 Encoding: UTF-8
 LazyData: true
