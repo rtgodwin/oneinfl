@@ -3,7 +3,7 @@ dEdq_nb <- function(b, g, a, X, Z, dummies) {
   t <- exp(-Z %*% g)
   th <- l / a
   P1 <- a * ((1 / (1 + th)) ^ a) * th / (1 + th - (1 + th) ^ (1 - a))
-  L <- -(((a / (a + li)) ^ (-a)) * (1 / l) * (1 + l/a - (1 + l/a) ^ (1-a)) - 1) ^ (-1)
+  L <- -(((a / (a + l)) ^ (-a)) * (1 / l) * (1 + l/a - (1 + l/a) ^ (1-a)) - 1) ^ (-1)
   w <- L + (1 - L) / (1 + t)
   
   dldq <- dzdq <- matrix(, nrow(X), (ncol(data) - 1))
