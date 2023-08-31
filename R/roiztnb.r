@@ -14,6 +14,7 @@ roiztnb <- function(b, g, alpha, X, Z) {
     while(probs[k] < roll) {
       k <- k + 1
       probs <- c(probs, probs[k - 1] + (1 - omega[i]) * ((gamma(alpha + k)) / (gamma(alpha) * gamma(k + 1))) * ((1/(1 + theta[i])) ^ alpha) * ((theta[i] / (1 + theta[i])) ^ k) * (1 / (1 - (1 + theta[i]) ^ (-alpha))))
+      if(is.nan(probs[k]) == T) {break}
     }
     y[i] <- k
   }
