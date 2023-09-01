@@ -75,7 +75,7 @@ oneinfl <- function(formula, data, dist = "negbin", start = NULL, method = "BFGS
     z$gamma <- fitnb$par[(kx + 1):(kx + kz)]
     z$alpha <- as.numeric(fitnb$par[np])
     z$vc <- -solve(as.matrix(fitnb$hessian))
-    colnames(z$vc) <- rownames(z$vc) <- c(paste("beta", colnames(X), sep = "_"), paste("gamma", colnames(Z), sep = "_"), "alpha")
+    colnames(z$vc) <- rownames(z$vc) <- c(paste("b", colnames(X)), paste("g", colnames(Z)), "alpha")
     z$logl <- fitnb$value
   } else {stop("dist must be either Poisson or negbin")}
   names(z$beta) <- paste("b", colnames(X), sep="")
