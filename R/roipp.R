@@ -9,12 +9,12 @@ roipp <- function(b, g, X, Z) {
   for(i in 1:n) {
     roll <- runif(1)
     # Determine prob of a 1 count
-    probs <- omega[i] + (1 - omega[i]) * l / (exp(l) - 1)
+    probs <- omega[i] + (1 - omega[i]) * l[i] / (exp(l[i]) - 1)
     k <- 1
     # Determine subsequent probs until roll is reached
     while(probs[k] < roll) {
       k <- k + 1
-      probs <- c(probs, probs[k - 1] + (1 - omega[i]) * l ^ k / ((exp(l) - 1) * factorial(k)))
+      probs <- c(probs, probs[k - 1] + (1 - omega[i]) * (l[i] ^ k) / ((exp(l[i]) - 1) * factorial(k)))
     }
     y[i] <- k
   }
