@@ -64,7 +64,7 @@ oneinfl <- function(formula, data, dist = "negbin", start = NULL, method = "BFGS
     z$beta <- fitp$par[1:kx]
     z$gamma <- fitp$par[(kx + 1):(kx + kz)]
     z$vc <- -solve(as.matrix(fitp$hessian))
-    colnames(z$vc) <- rownames(z$vc) <- c(paste("b", colnames(X), sep = "_"), paste("g", colnames(Z), sep = "_"))
+    colnames(z$vc) <- rownames(z$vc) <- c(paste("b", colnames(X)), paste("g", colnames(Z)))
     z$logl <- fitp$value
   } else if (dist == "negbin") {
     fitnb <- suppressWarnings(optim(fn = lloiztnb, par = pstart, method=method, control=list(fnscale=-1, maxit=5000), hessian = T))
