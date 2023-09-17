@@ -64,7 +64,7 @@ oneinfl <- function(formula, data, dist = "negbin", start = NULL, method = "BFGS
     z$beta <- fitp$par[1:kx]
     z$gamma <- fitp$par[(kx + 1):(kx + kz)]
     z$vc <- -solve(as.matrix(fitp$hessian))
-    colnames(z$vc) <- rownames(z$vc) <- c(paste("b", colnames(X)), paste("g", colnames(Z)))
+    colnames(z$vc) <- rownames(z$vc) <- c(paste("b", colnames(X), sep=""), paste("g", colnames(Z), sep=""))
     z$logl <- fitp$value
   } else if (dist == "negbin") {
     fitnb <- suppressWarnings(optim(fn = lloiztnb, par = pstart, method=method, control=list(fnscale=-1, maxit=5000), hessian = T))
@@ -75,7 +75,7 @@ oneinfl <- function(formula, data, dist = "negbin", start = NULL, method = "BFGS
     z$gamma <- fitnb$par[(kx + 1):(kx + kz)]
     z$alpha <- as.numeric(fitnb$par[np])
     z$vc <- -solve(as.matrix(fitnb$hessian))
-    colnames(z$vc) <- rownames(z$vc) <- c(paste("b", colnames(X)), paste("g", colnames(Z)), "alpha")
+    colnames(z$vc) <- rownames(z$vc) <- c(paste("b", colnames(X), sep=""), paste("g", colnames(Z), sep=""), "alpha")
     z$logl <- fitnb$value
   } else {stop("dist must be either Poisson or negbin")}
   names(z$beta) <- paste("b", colnames(X), sep="")
