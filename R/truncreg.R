@@ -1,4 +1,4 @@
-oneinfl <- function(formula, data, dist = "negbin", start = NULL, method = "BFGS") {
+truncreg <- function(formula, data, dist = "negbin", start = NULL, method = "BFGS") {
   
   llpp <- function(param) {
     l <- as.vector(exp(X %*% param[1:kx]))
