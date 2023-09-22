@@ -35,6 +35,8 @@ oneinfl <- function(formula, data, dist = "negbin", start = NULL, method = "BFGS
     if(dist == "Poisson") {c(bs, gs)}
     else if (dist == "negbin") {c(bs, gs, 0.5)}
   }
+
+  environment(summary.oneinflmodel) <- globalenv()
   
   z <- list()
   class(z) <- "oneinflmodel"
