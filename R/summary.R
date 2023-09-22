@@ -1,6 +1,4 @@
 summary.oneinflmodel <- function(object, ...) {
-  environment(summary.oneinflmodel) <- globalenv()
-  
   # Extract components from the model object
   beta_vals <- object$beta
   gamma_vals <- object$gamma
