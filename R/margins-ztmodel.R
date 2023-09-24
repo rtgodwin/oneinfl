@@ -33,8 +33,8 @@ margins.ztmodel <- function(model, data, at="AE") {
   }
   
   if (model$dist == "Poisson") {
-    q$dEdq <- colMeans(dEdq_pois(b, g, X, Z, dummies))
-    J <- as.matrix(colMeans(attr(numericDeriv(quote(dEdq_pois(b, g, X, Z, dummies)), c("b", "g")), "gradient")))
+    q$dEdq <- colMeans(dEdq_pois_noinfl(b, X, dummies))
+    J <- as.matrix(colMeans(attr(numericDeriv(quote(dEdq_pois(b, X, dummies)), "b", "gradient")))
     q$se <- sqrt(diag(J %*% model$vc %*% t(J)))
   }
   
@@ -43,6 +43,5 @@ margins.ztmodel <- function(model, data, at="AE") {
     J <- as.matrix(colMeans(attr(numericDeriv(quote(dEdq_nb_noinfl(b, a, X, dummies)), c("b", "a")), "gradient")))
     q$se <- sqrt(diag(J %*% model$vc %*% t(J)))
   }
-  
   q
 }
