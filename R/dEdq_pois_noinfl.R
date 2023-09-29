@@ -1,6 +1,5 @@
 dEdq_pois_noinfl <- function(b, X, dummies) {
   l <- exp(X %*% b)
-  th <- l / a
   w <- 0
   
   dldq <- matrix(, nrow(X), (ncol(data) - 1))
