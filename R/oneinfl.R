@@ -66,6 +66,12 @@ oneinfl <- function(formula, data, dist = "negbin", start = NULL, method = "BFGS
     z$vc <- -solve(as.matrix(fitp$hessian))
     colnames(z$vc) <- rownames(z$vc) <- c(paste("b", colnames(X), sep=""), paste("g", colnames(Z), sep=""))
     z$logl <- fitp$value
+    # Calculate the average one-inflation
+    l <- exp(X %*% z$beta)
+    t <- Z %*% z$gamma
+    L <- -l / (exp(l) - l - 1)
+    w <- L + (1 - L) / (1 + exp(-t))
+    z$avgw <- mean(w)  
   } else if (dist == "negbin") {
     fitnb <- suppressWarnings(optim(fn = lloiztnb, par = pstart, method=method, control=list(fnscale=-1, maxit=5000), hessian = T))
     if (fitnb$convergence > 0)
@@ -77,6 +83,15 @@ oneinfl <- function(formula, data, dist = "negbin", start = NULL, method = "BFGS
     z$vc <- -solve(as.matrix(fitnb$hessian))
     colnames(z$vc) <- rownames(z$vc) <- c(paste("b", colnames(X), sep=""), paste("g", colnames(Z), sep=""), "alpha")
     z$logl <- fitnb$value
+    # Calculate the averagge one-inflation
+    li <- exp(X %*% z$beta)
+    t <- Z %*% z$gamma
+    a  <- z$alpha
+    th <- li / a
+    P1 <- a * ((1 / (1 + th)) ^ a) * th / (1 + th - (1 + th) ^ (1 - a))
+    L <- -P1 / (1 - P1)
+    w <- L + (1 - L) / (1 + exp(-t))
+    z$avgw <- mean(w)
   } else {stop("dist must be either Poisson or negbin")}
   names(z$beta) <- paste("b", colnames(X), sep="")
   names(z$gamma) <- paste("g", colnames(Z), sep="")
