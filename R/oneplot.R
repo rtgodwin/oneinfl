@@ -5,7 +5,7 @@ oneplot <- function(model1, model2, model3, model4, data, maxpred, ylimit) {
     points(x = df.bar[,1], y = preds, pch=4, col="gold",cex=1)
     lines(x = df.bar[,1], y = preds, col="gold",cex=1)
     leg <<- c(leg, "Poisson")
-    cols <<- c(cols, "gold")
+    cols <<- c(cols, "purple")
     pchs <<- c(pchs, 4)
   }
   
@@ -99,5 +99,5 @@ oneplot <- function(model1, model2, model3, model4, data, maxpred, ylimit) {
     }
   }
   
-  legend("topright", legend=leg, col=cols, pch=pchs, cex = 0.8)
+  legend("topright", legend=leg, col=cols, pch=pchs, cex = 1)
 }
