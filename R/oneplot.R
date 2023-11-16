@@ -2,8 +2,8 @@ oneplot <- function(model1, model2, model3, model4, data, maxpred, ylimit) {
   
   plotpp <- function(model, data, maxpred) {
     preds <- pred(model, data, maxpred)
-    points(x = df.bar[,1], y = preds, pch=4, col="gold",cex=1)
-    lines(x = df.bar[,1], y = preds, col="gold",cex=1)
+    points(x = df.bar[,1], y = preds, pch=4, col="purple",cex=1)
+    lines(x = df.bar[,1], y = preds, col="purple",cex=1)
     leg <<- c(leg, "Poisson")
     cols <<- c(cols, "purple")
     pchs <<- c(pchs, 4)
