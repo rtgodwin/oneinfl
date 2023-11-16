@@ -1,18 +1,18 @@
-oneplot <- function(model1, model2, model3, model4, data, maxpred, ylimit) {
+oneplot <- function(model1, model2, model3, model4, data, maxpred, ylimit, ccex) {
   
   plotpp <- function(model, data, maxpred) {
     preds <- pred(model, data, maxpred)
-    points(x = df.bar[,1], y = preds, pch=4, col="purple",cex=1)
-    lines(x = df.bar[,1], y = preds, col="purple",cex=1)
+    points(x = df.bar[,1], y = preds, pch=25, col="darkmagenta",cex=ccex)
+    lines(x = df.bar[,1], y = preds, col="darkmagenta",lwd=ccex)
     leg <<- c(leg, "Poisson")
-    cols <<- c(cols, "purple")
-    pchs <<- c(pchs, 4)
+    cols <<- c(cols, "darkmagenta")
+    pchs <<- c(pchs, 25)
   }
   
   plotztnb <- function(model, data, maxpred) {
     preds <- pred(model, data, maxpred)
-    points(x = df.bar[,1], y = preds, pch=18, col="red",cex=1)
-    lines(x = df.bar[,1], y = preds, col="red",cex=1)
+    points(x = df.bar[,1], y = preds, pch=18, col="red",cex=ccex)
+    lines(x = df.bar[,1], y = preds, col="red",lwd=ccex)
     leg <<- c(leg, "negbin")
     cols <<- c(cols, "red")
     pchs <<- c(pchs, 18)
@@ -20,8 +20,8 @@ oneplot <- function(model1, model2, model3, model4, data, maxpred, ylimit) {
   
   plotoipp <- function(model, data, maxpred) {
     preds <- pred(model, data, maxpred)
-    points(x = df.bar[,1], y = preds, pch=17, col="green",cex=1)
-    lines(x = df.bar[,1], y = preds, col="green",cex=1)
+    points(x = df.bar[,1], y = preds, pch=17, col="green",cex=ccex)
+    lines(x = df.bar[,1], y = preds, col="green",lwd=ccex)
     leg <<- c(leg, "one inflated Poisson")
     cols <<- c(cols, "green")
     pchs <<- c(pchs, 17)
@@ -29,8 +29,8 @@ oneplot <- function(model1, model2, model3, model4, data, maxpred, ylimit) {
   
   plotoiztnb <- function(model, data, maxpred) {
     preds <- pred(model, data, maxpred)
-    points(x = df.bar[,1], y = preds, pch=16, col="blue",cex=1)
-    lines(x = df.bar[,1], y = preds, col="blue",cex=1)
+    points(x = df.bar[,1], y = preds, pch=16, col="blue",cex=ccex)
+    lines(x = df.bar[,1], y = preds, col="blue",lwd=ccex)
     leg <<- c(leg, "one inflated negbin")
     cols <<- c(cols, "blue")
     pchs <<- c(pchs, 16)
@@ -48,9 +48,13 @@ oneplot <- function(model1, model2, model3, model4, data, maxpred, ylimit) {
     ylimit = max(y) * 1.1
   }
   
-  df.bar <- barplot(tabulate(y)[1:maxpred], names=1:maxpred, xlab="count", ylab="frequency", col="gray50", ylim = c(0, ylimit))
+  if(missing(ccex)) {
+    ccex = 1.5
+  }
+  
+  df.bar <- barplot(tabulate(y)[1:maxpred], names=1:maxpred, xlab="count", ylab="frequency", col="gray60", ylim = c(0, ylimit))
   leg <- "actual data"
-  cols <- "gray40"
+  cols <- "gray60"
   pchs <- 15
   
   if(class(model1) == "truncmodel" & model1$dist == "Poisson") {
