@@ -44,7 +44,8 @@ summary.oneinflmodel <- function(object, ...) {
     cat("\nalpha:\n")
     print(alpha_table, digits = 4)
   }
-  
+
+  cat(paste("\naverage one-inflation: ", object$avgw, "\n"))
   cat(paste("\nLog-likelihood: ", log_likelihood, "\n"))
   
   invisible(list(beta = beta_table, gamma = gamma_table, alpha = alpha_table))
