@@ -7,7 +7,7 @@ dEdq_pois_noinfl <- function(b, X, dummies) {
   dldq[, -which(colnames(dldq) %in% colnames(X)[-1])] <- 0L
 
   # Do the math
-  dEdq <- dldq * exp(l) * (exp(l) - l - 1) / (exp(l) - 1) ^ 2)
+  dEdq <- dldq * exp(l) * (exp(l) - l - 1) / ((exp(l) - 1) ^ 2)
   
   # Calculate the "marginal" effect for dummies properly
   if(length(dummies) == 0) {return(dEdq)}
