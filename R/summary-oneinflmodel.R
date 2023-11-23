@@ -7,18 +7,36 @@ summary.oneinflmodel <- function(object, ...) {
                                  (1 + length(beta_vals)):(length(beta_vals) + length(gamma_vals))]
   log_likelihood <- object$logl
   
-  # Helper function to create table
+  # Function to create table
   create_table <- function(coefs, vcov_matrix) {
     se <- sqrt(diag(vcov_matrix))
     z_value <- coefs / se
     p_value <- 2 * (1 - pnorm(abs(z_value)))
     
-    cbind(
+    tabl <- cbind(
       Estimate = coefs,
       Std.Error = se,
       z_value = z_value,
       p.value = p_value
     )
+    
+    significance <- sapply(p_value, get_significance)
+    result_df <- data.frame(tabl,significance)
+    colnames(result_df)[5] <- ""
+    return(result_df)
+  }
+  
+  # Function to determine significance symbols
+  get_significance <- function(p_value) {
+    if (p_value < 0.001) {
+      return("***")
+    } else if (p_value < 0.01) {
+      return("**")
+    } else if (p_value < 0.05) {
+      return("*")
+    } else {
+      return("")
+    }
   }
   
   # Creating tables for beta and gamma coefficients
@@ -44,7 +62,7 @@ summary.oneinflmodel <- function(object, ...) {
     cat("\nalpha:\n")
     print(alpha_table, digits = 4)
   }
-
+  
   cat(paste("\naverage one-inflation: ", object$avgw, "\n"))
   cat(paste("\naverage absolute one-inflation: ", object$absw, "\n"))
   cat(paste("\nLog-likelihood: ", log_likelihood, "\n"))
