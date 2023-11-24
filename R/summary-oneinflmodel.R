@@ -34,6 +34,8 @@ summary.oneinflmodel <- function(object, ...) {
       return("**")
     } else if (p_value < 0.05) {
       return("*")
+    } else if (p_value < 0.1) {
+      return(".")
     } else {
       return("")
     }
@@ -62,7 +64,7 @@ summary.oneinflmodel <- function(object, ...) {
     cat("\nalpha:\n")
     print(alpha_table, digits = 4)
   }
-  
+  cat(paste("\nSignif. codes:  0 `***' 0.001 `**' 0.01 `*' 0.05 `.' 0.1 ` ' 1\n"))
   cat(paste("\naverage one-inflation: ", object$avgw, "\n"))
   cat(paste("\naverage absolute one-inflation: ", object$absw, "\n"))
   cat(paste("\nLog-likelihood: ", log_likelihood, "\n"))
