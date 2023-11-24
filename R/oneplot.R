@@ -52,9 +52,9 @@ oneplot <- function(model1, model2, model3, model4, data, maxpred, ylimit, ccex)
     ccex = 1.5
   }
   
-  df.bar <- barplot(tabulate(y)[1:maxpred], names=1:maxpred, xlab="count", ylab="frequency", col="gray30", ylim = c(0, ylimit))
+  df.bar <- barplot(tabulate(y)[1:maxpred], names=1:maxpred, xlab="count", ylab="frequency", col="gray112", ylim = c(0, ylimit))
   leg <- "actual data"
-  cols <- "gray30"
+  cols <- "gray112"
   pchs <- 15
   
   if(class(model1) == "truncmodel" & model1$dist == "Poisson") {
