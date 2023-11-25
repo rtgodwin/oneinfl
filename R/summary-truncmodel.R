@@ -21,6 +21,21 @@ summary.truncmodel <- function(object, ...) {
     colnames(result_df)[5] <- ""
     return(result_df)
   }
+
+  # Function to determine significance symbols
+  get_significance <- function(p_value) {
+    if (p_value < 0.001) {
+      return("***")
+    } else if (p_value < 0.01) {
+      return("**")
+    } else if (p_value < 0.05) {
+      return("*")
+    } else if (p_value < 0.1) {
+      return(".")
+    } else {
+      return("")
+    }
+  }
   
   # Creating tables for beta and gamma coefficients
   beta_table <- create_table(beta_vals, vcov_matrix_beta)
