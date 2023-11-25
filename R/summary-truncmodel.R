@@ -10,7 +10,7 @@ summary.truncmodel <- function(object, ...) {
     z_value <- coefs / se
     p_value <- 2 * (1 - pnorm(abs(z_value)))
     
-    cbind(
+    tabl <- cbind(
       Estimate = coefs,
       Std.Error = se,
       z_value = z_value,
