@@ -16,6 +16,10 @@ summary.truncmodel <- function(object, ...) {
       z_value = z_value,
       p.value = p_value
     )
+    significance <- sapply(p_value, get_significance)
+    result_df <- data.frame(tabl, significance)
+    colnames(result_df)[5] <- ""
+    return(result_df)
   }
   
   # Creating tables for beta and gamma coefficients
