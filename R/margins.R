@@ -49,8 +49,11 @@ margins <- function(model, data, at="AE") {
 
   # determine which variables are dummies
   is.dummy.X <- function(X) {length(unique(X)) == 2}
-  is.dummy.Z <- function(Z) {length(unique(Z)) == 2}
-  dummies <- c(colnames(data[-1])[apply(data[-1], 2, is.dummy.X)], colnames(data[-1])[apply(data[-1], 2, is.dummy.Z)][!colnames(data[-1])[apply(data[-1], 2, is.dummy.Z)] %in% colnames(data[-1])[apply(data[-1], 2, is.dummy.X)]])
+  if(class(model) == "oneinflmodel") {is.dummy.Z <- function(Z) {length(unique(Z)) == 2}}
+  dummies <- colnames(data[-1])[apply(data[-1], 2, is.dummy.X)]
+  if(class(model) == "oneinflmodel") {
+    dummies <- c(colnames(data[-1])[apply(data[-1], 2, is.dummy.X)], colnames(data[-1])[apply(data[-1], 2, is.dummy.Z)][!colnames(data[-1])[apply(data[-1], 2, is.dummy.Z)] %in% colnames(data[-1])[apply(data[-1], 2, is.dummy.X)]])
+  }
   
   if (is.list(at)) {
     q$where <- "Marginal effect evaluated at: "
@@ -98,10 +101,14 @@ margins <- function(model, data, at="AE") {
   
   names(q$se) <- names(q$dEdq) 
   bnames <- names(b)[-1]
-  gnames <- names(g)[-1]
-  gnames <- gnames[!gnames %in% bnames]
-  q$dEdq <- q$dEdq[c(bnames, gnames)]
-  q$se <- q$se[c(bnames, gnames)]
+  q$dEdq <- q$dEdq[c(bnames)]
+  q$se <- q$se[c(bnames)]
+  if(class(model) == "oneinflmodel") {
+    gnames <- names(g)[-1]
+    gnames <- gnames[!gnames %in% bnames]
+    q$dEdq <- q$dEdq[c(bnames, gnames)]
+    q$se <- q$se[c(bnames, gnames)]
+  }
   
   # Creating table
   margins_table <- create_table(q$dEdq, q$se)
