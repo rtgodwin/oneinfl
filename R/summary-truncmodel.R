@@ -56,6 +56,7 @@ summary.truncmodel <- function(object, ...) {
     cat("\nalpha:\n")
     print(alpha_table, digits = 4)
   }
+  cat(paste("\nSignif. codes:  0 `***' 0.001 `**' 0.01 `*' 0.05 `.' 0.1 ` ' 1\n"))
   cat(paste("\nLog-likelihood: ", log_likelihood, "\n"))
   
   invisible(list(beta = beta_table, alpha = alpha_table))
