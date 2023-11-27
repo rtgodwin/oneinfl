@@ -51,6 +51,7 @@ margins <- function(model, data, at="AE") {
   is.dummy.X <- function(X) {length(unique(X)) == 2}
   if(class(model) == "oneinflmodel") {is.dummy.Z <- function(Z) {length(unique(Z)) == 2}}
   dummies <- colnames(data[-1])[apply(data[-1], 2, is.dummy.X)]
+  # add dummies from Z if they aren't already in X
   if(class(model) == "oneinflmodel") {
     dummies <- c(colnames(data[-1])[apply(data[-1], 2, is.dummy.X)], colnames(data[-1])[apply(data[-1], 2, is.dummy.Z)][!colnames(data[-1])[apply(data[-1], 2, is.dummy.Z)] %in% colnames(data[-1])[apply(data[-1], 2, is.dummy.X)]])
   }
