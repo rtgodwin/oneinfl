@@ -5,6 +5,10 @@ oneinfl <- function(formula, data, dist = "negbin", start = NULL, method = "BFGS
     t <- as.vector(Z %*% param[(kx + 1):(kx + kz)])
     L <- -l / (exp(l) - l - 1)
     w <- L + (1 - L) / (1 + exp(-t))
+    if(max(y) > 170) {
+      log.fac.y <- y * log(y) - y
+      log.fac.y[y < 171] <- log(factorial(y))
+    } else if (max(y) < 171) {log.fac.y <- log(factorial(y))}
     return(sum(log(1 - w) + (y == 1) * log(w / (1 - w) + l / (exp(l) - 1)) + (1 - (y==1)) * (y * log(l) - log(exp(l) - 1) - log(factorial(y)))))
   }
   
@@ -16,6 +20,10 @@ oneinfl <- function(formula, data, dist = "negbin", start = NULL, method = "BFGS
     P1 <- a * ((1 / (1 + th)) ^ a) * th / (1 + th - (1 + th) ^ (1 - a))
     L <- -P1 / (1 - P1)
     w <- L + (1 - L) / (1 + exp(-t))
+    if(max(y) > 170) {
+      log.fac.y <- y * log(y) - y
+      log.fac.y[y < 171] <- log(factorial(y))
+    } else if (max(y) < 171) {log.fac.y <- log(factorial(y))}
     ymax <- max(y)
     terms <- weights <- rep(0, ymax)
     for(ii in 1:ymax) {
