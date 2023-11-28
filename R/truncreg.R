@@ -4,7 +4,7 @@ truncreg <- function(formula, data, dist = "negbin", start = NULL, method = "BFG
     l <- as.vector(exp(X %*% param[1:kx]))
     if(max(y) > 170) {
       log.fac.y <- y * log(y) - y
-      log.fac.y[y < 171] <- log(factorial(y))
+      log.fac.y[y < 171] <- log(factorial(y)[y < 171])
     } else if (max(y) < 171) {log.fac.y <- log(factorial(y))}
     return(sum(y * log(l) - log(exp(l) - 1) - log.fac.y))
   }
@@ -14,7 +14,7 @@ truncreg <- function(formula, data, dist = "negbin", start = NULL, method = "BFG
     a  <- param[kx + 1]
     if(max(y) > 170) {
       log.fac.y <- y * log(y) - y
-      log.fac.y[y < 171] <- log(factorial(y))
+      log.fac.y[y < 171] <- log(factorial(y)[y < 171])
     } else if (max(y) < 171) {log.fac.y <- log(factorial(y))}
     ymax <- max(y)
     terms <- weights <- rep(0, ymax)
