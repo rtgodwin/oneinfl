@@ -9,7 +9,7 @@ oneinfl <- function(formula, data, dist = "negbin", start = NULL, method = "BFGS
       log.fac.y <- y * log(y) - y
       log.fac.y[y < 171] <- log(factorial(y))
     } else if (max(y) < 171) {log.fac.y <- log(factorial(y))}
-    return(sum(log(1 - w) + (y == 1) * log(w / (1 - w) + l / (exp(l) - 1)) + (1 - (y==1)) * (y * log(l) - log(exp(l) - 1) - log(factorial(y)))))
+    return(sum(log(1 - w) + (y == 1) * log(w / (1 - w) + l / (exp(l) - 1)) + (1 - (y==1)) * (y * log(l) - log(exp(l) - 1) - log.fac.y)))
   }
   
   lloiztnb <- function(param) {
@@ -34,7 +34,7 @@ oneinfl <- function(formula, data, dist = "negbin", start = NULL, method = "BFGS
       weights[ii] <- sum(y > (ii - 1))
     }
     gterm <- terms * weights
-    return(sum(log(1 - w) + (y == 1) * (log(w / (1 - w) + a * ((a / (a + li)) ^ a) * (li / (a + li - a * (1 + (li / a)) ^ (1 - a))))) + (1 - (y == 1)) * (a * log(a) - log(factorial(y)) + y * log(li) - (a + y) * log(a + li) - log(1 - (a / (a + li)) ^ a))) + sum(gterm))
+    return(sum(log(1 - w) + (y == 1) * (log(w / (1 - w) + a * ((a / (a + li)) ^ a) * (li / (a + li - a * (1 + (li / a)) ^ (1 - a))))) + (1 - (y == 1)) * (a * log(a) - log.fac.y + y * log(li) - (a + y) * log(a + li) - log(1 - (a / (a + li)) ^ a))) + sum(gterm))
   }
   
   findstart <- function() {
