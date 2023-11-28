@@ -6,7 +6,7 @@ truncreg <- function(formula, data, dist = "negbin", start = NULL, method = "BFG
       log.fac.y <- y * log(y) - y
       log.fac.y[y < 171] <- log(factorial(y))
     } else if (max(y) < 171) {log.fac.y <- log(factorial(y))}
-    return(sum(y * log(l) - log(exp(l) - 1) - log(factorial(y))))
+    return(sum(y * log(l) - log(exp(l) - 1) - log.fac.y))
   }
   
   llztnb <- function(param) {
@@ -26,7 +26,7 @@ truncreg <- function(formula, data, dist = "negbin", start = NULL, method = "BFG
       weights[ii] <- sum(y > (ii - 1))
     }
     gterm <- sum(terms * weights)
-    return(sum((y == 1) * log(a) - log(factorial(y)) + a * log(a) + y * log(li) - (a + y) * log(a + li) - log(1 - (a / (a + li)) ^ a)) + gterm)
+    return(sum((y == 1) * log(a) - log.fac.y + a * log(a) + y * log(li) - (a + y) * log(a + li) - log(1 - (a / (a + li)) ^ a)) + gterm)
   }
   
   findstart <- function() {
