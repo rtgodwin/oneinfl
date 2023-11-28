@@ -7,7 +7,7 @@ oneinfl <- function(formula, data, dist = "negbin", start = NULL, method = "BFGS
     w <- L + (1 - L) / (1 + exp(-t))
     if(max(y) > 170) {
       log.fac.y <- y * log(y) - y
-      log.fac.y[y < 171] <- log(factorial(y))
+      log.fac.y[y < 171] <- log(factorial(y)[y < 171])
     } else if (max(y) < 171) {log.fac.y <- log(factorial(y))}
     return(sum(log(1 - w) + (y == 1) * log(w / (1 - w) + l / (exp(l) - 1)) + (1 - (y==1)) * (y * log(l) - log(exp(l) - 1) - log.fac.y)))
   }
@@ -22,7 +22,7 @@ oneinfl <- function(formula, data, dist = "negbin", start = NULL, method = "BFGS
     w <- L + (1 - L) / (1 + exp(-t))
     if(max(y) > 170) {
       log.fac.y <- y * log(y) - y
-      log.fac.y[y < 171] <- log(factorial(y))
+      log.fac.y[y < 171] <- log(factorial(y)[y < 171])
     } else if (max(y) < 171) {log.fac.y <- log(factorial(y))}
     ymax <- max(y)
     terms <- weights <- rep(0, ymax)
