@@ -1,3 +1,4 @@
+# Caluculate the expected value from an OIZTNB distribution
 E_negbin <- function(b, g, a, X, Z) {
   l <- exp(X %*% b)
   t <- exp(-Z %*% g)
