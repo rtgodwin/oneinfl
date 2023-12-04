@@ -1,3 +1,4 @@
+# Caluculate the expected value from an OIPP distribution
 E_pois <- function(b, g, X, Z) {
   l <- exp(X %*% b)
   t <- exp(-Z %*% g)
