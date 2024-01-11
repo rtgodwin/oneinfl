@@ -1,2 +1,2 @@
 exportPattern("^[[:alpha:]]+")
-export(summary.oneinflmodel)
+export(summary.oneinfl)
