@@ -46,7 +46,7 @@ margins <- function(model, data, at="AE") {
   cleandata <- makeXZy(formula, data)
   X <- cleandata$X
   if(class(model) == "oneinflmodel") {Z <- cleandata$Z}
-
+  
   # determine which variables are dummies
   is.dummy.X <- function(X) {length(unique(X)) == 2}
   if(class(model) == "oneinflmodel") {is.dummy.Z <- function(Z) {length(unique(Z)) == 2}}
@@ -100,15 +100,18 @@ margins <- function(model, data, at="AE") {
     }
   }
   
-  names(q$se) <- names(q$dEdq) 
-  bnames <- names(b)[-1]
-  q$dEdq <- q$dEdq[c(bnames)]
-  q$se <- q$se[c(bnames)]
   if(class(model) == "oneinflmodel") {
+    names(q$se) <- names(q$dEdq) 
+    bnames <- names(b)[-1]
     gnames <- names(g)[-1]
     gnames <- gnames[!gnames %in% bnames]
     q$dEdq <- q$dEdq[c(bnames, gnames)]
     q$se <- q$se[c(bnames, gnames)]
+  } else if(class(model) == "truncmodel") {
+    names(q$se) <- names(q$dEdq) 
+    bnames <- names(b)[-1]
+    q$dEdq <- q$dEdq[c(bnames)]
+    q$se <- q$se[c(bnames)]
   }
   
   # Creating table
