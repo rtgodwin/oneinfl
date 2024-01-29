@@ -45,7 +45,7 @@ oneplot <- function(model1, model2, model3, model4, data, maxpred, ylimit, ccex)
   }
   
   if(missing(ylimit)) {
-    ylimit = max(y) * 1.1
+    ylimit = max(tabulate(y)) * 1.1
   }
   
   if(missing(ccex)) {
