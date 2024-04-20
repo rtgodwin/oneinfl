@@ -70,7 +70,7 @@ summary.oneinfl <- function(object, ...) {
     cat(paste("\naverage absolute one-inflation: ", object$absw, "\n"))
     cat(paste("\nLog-likelihood: ", log_likelihood, "\n"))
   
-    invisible(list(beta = beta_table, gamma = gamma_table, alpha = alpha_table))
+    #invisible(list(beta = beta_table, gamma = gamma_table, alpha = alpha_table))
   }
   
   if(class(object) == "truncmodel"){
@@ -134,6 +134,6 @@ summary.oneinfl <- function(object, ...) {
     cat(paste("\nSignif. codes:  0 `***' 0.001 `**' 0.01 `*' 0.05 `.' 0.1 ` ' 1\n"))
     cat(paste("\nLog-likelihood: ", log_likelihood, "\n"))
   
-    invisible(list(beta = beta_table, alpha = alpha_table))
+    #invisible(list(beta = beta_table, alpha = alpha_table))
   }
 }
