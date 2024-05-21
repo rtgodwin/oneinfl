@@ -10,7 +10,7 @@ summary.oneinfl <- function(object, ...) {
   
     # Function to create table
     create_table <- function(coefs, vcov_matrix) {
-      se <- sqrt(diag(vcov_matrix))
+      se <- sqrt(diag(as.matrix(vcov_matrix)))
       z_value <- coefs / se
       p_value <- 2 * (1 - pnorm(abs(z_value)))
     
