@@ -4,7 +4,9 @@ Title: Estimates OIPP and OIZTNB Regression Models
 Version: 0.1.0
 Author: Ryan T. Godwin
 Maintainer: Ryan T. Godwin <ryan.godwin@umanitoba.ca>
-Description: Estimates one-inflated positive Poisson (OIPP) and one-inflated zero truncated (OIZTNB) regression models. Marginal effects and their standard errors are also estimated.
-License: MIT License
+Description: Estimates one-inflated positive Poisson (OIPP) and one-inflated zero-truncated negative binomial (OIZTNB) regression models. A suite of ancilliary statistical tools are also provided, including: estimation of positive Poisson (PP) and zero-truncated negative binomial (ZTNB) models; marginal effects and their standard errors; likelihood ratio and various Wald tests; plotting; predicted counts and expected responses; and random variate generation. 
+License: GPL (>= 3)
 Encoding: UTF-8
 LazyData: true
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.3.2
