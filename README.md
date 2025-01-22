@@ -1,58 +1,44 @@
 ---
 title: "R package `oneinfl`"
-permalink: /oneinfl/
-excerpt: 
-toc: true
-author_profile: true
-masthead: false
 ---
 
 The R package `oneinfl` estimates one-inflated positive Poisson (OIPP) and one-inflated zero-truncated (OIZTNB) regression models. When count data are truncated so that $y = 1,2,\dots$, it is also often inflated at $y=1$. The current standard model for treating such data is the zero-truncated negative binomial (ZTNB) model. ZTNB fails to account for excess 1s (or too few 1s), resulting in biased and inconsistent estimators.
 
-This readme illustrates `oneinfl` by reproducing and extending the MedPar results in "One-inflated zero-truncated count regression models" (Godwin, 2023). Please cite this paper when using `oneinfl`.
+This readme illustrates `oneinfl` by reproducing and extending the MedPar results in ["One-inflated zero-truncated count regression models" (Godwin, 2024)](https://arxiv.org/pdf/2402.02272).
 
-## Load package and data
+### Load data
 
-Load the `oneinfl` package using:
-
-```r
-devtools::install_github("rtgodwin/oneinfl")
-library(oneinfl)
-```
-
-Load the medpar data from the `msme` package:
+Load the `medpar` data from the `msme` package:
 ```r
 library(msme)
 data(medpar)
-data = medpar
+df = medpar
 ```
 
-## `oneinfl(formula, data, dist)`: estimate OIZTNB and OIPP
-
-Estimate the one-inflated zero-truncated negative binomial (OIZTNB) model:
+### Estimate one-inflated positive Poisson (OIPP) and one-inflated zero-truncated negative binomial (OIZTNB) models
 
 ```r
 formula <- los ~ white + died + type2 + type3 | white + died + type2 + type3
-OIZTNB <- oneinfl(formula, data, dist="negbin")
-OIPP <- oneinfl(formula, data, dist="Poisson")
+OIZTNB <- oneinfl(formula, df, dist="negbin")
+OIPP <- oneinfl(formula, df, dist="Poisson")
 ```
 
-`formula` is the population model to be estimated, variables that precede `|` link to the mean function and variables that follow `|` link to one-inflation. `data` is a data frame and `dist="negbin"` estimates OIZTNB while `dist="Poisson"` estimates OIPP.
+`formula` is the population model to be estimated, variables that precede `|` link to the mean function and variables that follow `|` link to one-inflation. `df` is a data frame and `dist="negbin"` estimates OIZTNB while `dist="Poisson"` estimates OIPP.
 
-## `truncreg(formula, data, dist)`: estimate ZTNB and PP models 
+### Estimate positive Poisson (PP) and zero-truncated negative binomial (ZTNB) models 
 
-These are the current standard models for treating zero-truncated count data. Estimate them in `oneinfl` using:
+These are the current standard models for treating zero-truncated count data.
 
 ```r
 formula <- los ~ white + died + type2 + type3
-ZTNB <- truncreg(formula, data, dist="negbin")
-PP <- truncreg(formula, data, dist="Poisson")
+ZTNB <- truncreg(formula, df, dist="negbin")
+PP <- truncreg(formula, df, dist="Poisson")
 ```
-## `oneLRT(model1, model2)`: test for overdispersion and one-inflation
+### Test for overdispersion and one-inflation
 
 `oneLRT` extracts the log-likelihood and number of parameters in any two models estimated by `oneinfl` or `truncreg`. It returns the likelihood ratio test statistic and its associated _p_-value. It can be used to test hypotheses involving nested models.
 
-### Overdispersion
+#### Overdispersion
 
 Likelihood ratio test for overdispersion:
 
@@ -68,7 +54,7 @@ $pval
 ```
 We reject the null hypothesis of no overdispersion. Overdispersion is a well-developed topic that has led many to discard a Poisson model in favour of a negative binomial model. The principle extends to both truncated data (the ZTNB model vs. the PP model) and one-inflation (OIZTNB vs. OIPP).
 
-### One-inflation
+#### One-inflation
 
 Likelihood ratio test for one-inflation:
 
@@ -86,9 +72,9 @@ $pval
 
 The LRT supports the presence of one-inflation (the null hypothesis is no one-inflation).
 
-## `oneWald(oneinfl.model)`: test for one-inflation
+### Test for one-inflation
 
-Godwin (2023) presents a Wald test for the presence of one-inflation. Only the one-inflated models need be estimated; `oneinfl.model` should be a OIZTNB or OIPP model estimated by `oneinfl`.
+Godwin (2024) presents a Wald test for the presence of one-inflation. Only a one-inflated model estimated by `oneinfl` is needed.
 
 ```r
 oneWald(OIZTNB)
@@ -104,9 +90,9 @@ $pval
 
 The Wald test also supports the presence of one-inflation.
 
-## `oneplot(model1, model2, model3, model4)`: plot actual and predicted counts
+### Plot actual and predicted counts
 
-In Godwin (2023) only the OIZTNB and ZTNB models are plotted, but here we plot all of the estimated models using:
+Plot all of the estimated models using:
 
 ```r
 oneplot(PP, OIPP, ZTNB, OIZTNB, data=data, maxpred=20, ylimit=180)
@@ -116,12 +102,12 @@ which produces the following plot:
 
 ![](https://rtgodwin.com/vignettes/medparweb.png)
 
-## `summary.oneinfl(model)`: summarize
+### Summarize the models
 
-`summary.oneinfl(model)` is a custom summary function for OIZTNB, OIPP, ZTNB, and PP models estimated using `oneinfl`, which provides output similar to standard uses of `summary()`. For the OIZTNB model:
+A custom S3 summary function for OIZTNB, OIPP, ZTNB, and PP models estimated using `oneinfl()` or `truncreg()`, provides output similar to standard uses of `summary()`.
 
 ```r
-summary.oneinfl(OIZTNB)
+summary(OIZTNB)
 ```
 
 ```
@@ -163,7 +149,7 @@ For example, when the variable $died = 1$, one-inflation increases significantly
 To reproduce the results form Chapter 11.1 in Hilbe (2011), we summarize the ZTNB model using:
 
 ```r
-summary.oneinfl(ZTNB)
+summary(ZTNB)
 ```
 
 ```
@@ -190,9 +176,9 @@ Log-likelihood:  -4736.77246562658
 
 Taking `exp(ZTNB$beta)` gives the incident risk ratios.
 
-## `signifWald(model, "var.name")`: tests of significance
+### Tests of significance
 
-Since variables are typically linked to both the rate parameter $\lambda$ and the one-inflating parameter $\omega$, tests of overall significance are joint hypotheses. Testing the overall significance of the variable $white$ for example, we can use:
+Since variables are typically linked to both the rate parameter $\lambda$ and the one-inflating parameter $\omega$, tests of overall significance are joint hypotheses. Testing the overall significance of the variable $white$ for example, use:
 
 ```r
 signifWald(OIZTNB, "white")
@@ -208,12 +194,12 @@ $pval
 
 The _p_-value of 0.155 suggests that the variable does not have a significant effect on $los$, which is contrary to the standard ZTNB model.
 
-## `margins(model, data)`: estimate marginal effects and their standard errors
+### Estimate marginal effects and their standard errors
 
 Marginal effects can be estimated at the default "average effects" (the marginal effect is estimated at each observation and averaged over all observations):
 
 ```r
-margins(OIZTNB, data)
+margins(OIZTNB, df)
 ```
 
 ```
@@ -249,7 +235,7 @@ or at a representative case:
 margins(OIZTNB, data, at = list(white = 0, died = 0, type2 = 0, type3 = 0))
 ```
 
-## `pred(model, data)`: predicted values
+### Predicted values
 
 Generate predicted counts from an OIZTNB model:
 
@@ -263,7 +249,7 @@ or from any of the four models:
 pred(ZTNB, data)
 ```
 
-## Random variate generation
+### Random variate generation
 
 Random variates can be generated using `roipp(b, g, X, Z)` and `roiztnb(b, g, a, X, Z)`. For example:
 
@@ -275,11 +261,12 @@ roipp(b=c(0, 0), g=c(0, 0), X, Z)
 roiztnb(b=c(0, 0), g=c(0, 0), a=1, X, Z)
 ```
 
-## Generate the expected response
+### Generate the expected response
 
 To evaluate $E[y_i | \hat{\theta_i}]$ use:
 
 ```r
-predict.oneinfl(model = OIZTNB, data = medpar)
+predict(model = OIZTNB, data = medpar)
 ```
 for example.
+
