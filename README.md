@@ -9,7 +9,7 @@ masthead: false
 
 The R package `oneinfl` estimates one-inflated positive Poisson (OIPP) and one-inflated zero-truncated (OIZTNB) regression models. When count data are truncated so that $y = 1,2,\dots$, it is also often inflated at $y=1$. The current standard model for treating such data is the zero-truncated negative binomial (ZTNB) model. ZTNB fails to account for excess 1s (or too few 1s), resulting in biased and inconsistent estimators.
 
-This readme illustrates `oneinfl` by reproducing and extending the MedPar results in ["One-inflated zero-truncated count regression models" (Godwin, 2024)](https://arxiv.org/pdf/2402.02272).
+This readme illustrates `oneinfl` by reproducing and extending the MedPar results in ["One-inflated zero-truncated Poisson and negative binomial regression models" (Godwin, 2024)](https://arxiv.org/pdf/2402.02272).
 
 ### Load data
 
@@ -100,7 +100,7 @@ The Wald test also supports the presence of one-inflation.
 Plot all of the estimated models using:
 
 ```r
-oneplot(PP, OIPP, ZTNB, OIZTNB, data=data, maxpred=20, ylimit=180)
+oneplot(PP, OIPP, ZTNB, OIZTNB, df=df, maxpred=20, ylimit=180)
 ```
 
 which produces the following plot:
@@ -225,19 +225,19 @@ Signif. codes:  0 `***' 0.001 `**' 0.01 `*' 0.05 `.' 0.1 ` ' 1
 these marginal effects can be compared to other models estimated by `oneinfl`, for example using:
 
 ```r
-margins(ZTNB, data)
+margins(ZTNB, df)
 ```
 
 Marginal effects can be estimated at the "effect at means" (the data is averaged before evaluating the marginal effect):
 
 ```r
-margins(OIZTNB, data, at = "EM")
+margins(OIZTNB, df, at = "EM")
 ```
 
 or at a representative case:
 
 ```r
-margins(OIZTNB, data, at = list(white = 0, died = 0, type2 = 0, type3 = 0))
+margins(OIZTNB, df, at = list(white = 0, died = 0, type2 = 0, type3 = 0))
 ```
 
 ### Predicted values
@@ -245,13 +245,13 @@ margins(OIZTNB, data, at = list(white = 0, died = 0, type2 = 0, type3 = 0))
 Generate predicted counts from an OIZTNB model:
 
 ```r
-pred(OIZTNB, data)
+pred(OIZTNB, df)
 ```
 
 or from any of the four models:
 
 ```r
-pred(ZTNB, data)
+pred(ZTNB, df)
 ```
 
 ### Random variate generation
@@ -271,6 +271,6 @@ roiztnb(b=c(0, 0), g=c(0, 0), a=1, X, Z)
 To evaluate $E[y_i | \hat{\theta_i}]$ use:
 
 ```r
-predict(model = OIZTNB, data = medpar)
+predict(model = OIZTNB, df = medpar)
 ```
 for example.
