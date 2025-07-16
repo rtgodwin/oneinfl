@@ -1,5 +1,10 @@
 ---
 title: "R package `oneinfl`"
+permalink: /oneinfl/
+excerpt: 
+toc: true
+author_profile: true
+masthead: false
 ---
 
 The R package `oneinfl` estimates one-inflated positive Poisson (OIPP) and one-inflated zero-truncated (OIZTNB) regression models. When count data are truncated so that $y = 1,2,\dots$, it is also often inflated at $y=1$. The current standard model for treating such data is the zero-truncated negative binomial (ZTNB) model. ZTNB fails to account for excess 1s (or too few 1s), resulting in biased and inconsistent estimators.
@@ -269,4 +274,3 @@ To evaluate $E[y_i | \hat{\theta_i}]$ use:
 predict(model = OIZTNB, data = medpar)
 ```
 for example.
-

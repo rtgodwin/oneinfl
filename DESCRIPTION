@@ -1,0 +1,26 @@
+Type: Package
+Package: oneinfl
+Title: Estimates OIPP and OIZTNB Regression Models
+Version: 1.0.2
+Authors@R: 
+    person("Ryan T.", "Godwin", , "ryan.godwin@umanitoba.ca", role = c("aut", "cre"))
+Author: Ryan T. Godwin [aut, cre]
+Maintainer: Ryan T. Godwin <ryan.godwin@umanitoba.ca>
+Description: Estimates one-inflated positive Poisson (OIPP) and
+    one-inflated zero-truncated negative binomial (OIZTNB) regression
+    models. A suite of ancillary statistical tools are also provided,
+    including: estimation of positive Poisson (PP) and zero-truncated
+    negative binomial (ZTNB) models; marginal effects and their standard
+    errors; diagnostic likelihood ratio and Wald tests; plotting;
+    predicted counts and expected responses; and random variate
+    generation. The models and tools, as well as four applications, are
+    shown in Godwin, R. T. (2024). "One-inflated zero-truncated count
+    regression models" arXiv preprint <doi:10.48550/arXiv.2402.02272>.
+License: GPL (>= 3)
+Imports: graphics, stats
+Encoding: UTF-8
+NeedsCompilation: no
+Packaged: 2025-02-15 05:05:46 UTC; ryang
+RoxygenNote: 7.3.2
+Repository: CRAN
+Date/Publication: 2025-02-15 05:20:02 UTC
